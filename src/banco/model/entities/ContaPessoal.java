@@ -5,6 +5,7 @@ public class ContaPessoal {
     private Integer agencia, numero;
     private String senha;
     private Cliente cliente;
+    private Double saldo;
 
     public static void depositar() {
     }
@@ -12,11 +13,31 @@ public class ContaPessoal {
     public static void sacar() {
     }
 
-    public ContaPessoal(Integer agencia, Integer numero, String senha, Cliente cliente) {
+    @Override
+    public String toString() {
+        return "ContaPessoal{" +
+                "agencia=" + agencia +
+                ", numero=" + numero +
+                ", senha='" + senha + '\'' +
+                ", cliente=" + cliente +
+                ", saldo=" + saldo +
+                '}';
+    }
+
+    public ContaPessoal(Integer agencia, Integer numero, String senha, Cliente cliente, Double saldo) {
         this.agencia = agencia;
         this.numero = numero;
         this.senha = senha;
         this.cliente = cliente;
+        this.saldo = saldo;
+    }
+
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
     }
 
     public Integer getAgencia() {

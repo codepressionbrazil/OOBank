@@ -1,6 +1,8 @@
 package banco.model.dao;
 
 import banco.model.entities.Cliente;
+import banco.model.entities.ContaCorrente;
+import banco.model.entities.ContaCredito;
 import banco.model.entities.ContaPessoal;
 import banco.model.service.ClienteService;
 
@@ -14,10 +16,10 @@ public class ContaPessoalDAO {
     static ClienteService clienteService = new ClienteService();
 
     static {
-        listaContaPessoal.add(new ContaPessoal(1212, 1, "123",
-                clienteService.buscarCliente("Diego", "123")));
-        listaContaPessoal.add(new ContaPessoal(1313, 2, "123",
-                clienteService.buscarCliente("Gabriel", "321")));
+        listaContaPessoal.add(new ContaCorrente(1212, 1, "123",
+                clienteService.buscarCliente("Diego", "123"), 5000.0));
+        listaContaPessoal.add(new ContaCredito(1313, 2, "123",
+                clienteService.buscarCliente("Gabriel", "321"), 10000.0));
     }
 
     public static Set buscarContas(){

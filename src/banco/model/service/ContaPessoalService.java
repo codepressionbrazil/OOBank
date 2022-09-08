@@ -1,20 +1,30 @@
 package banco.model.service;
 
-import banco.controller.ContaPessoalController;
 import banco.model.dao.ContaPessoalDAO;
-import banco.model.entities.Cliente;
-import banco.model.entities.ContaPessoal;
+import banco.model.entities.*;
+import banco.view.Main;
 
 import java.util.ArrayList;
 
 public class ContaPessoalService {
-    public ContaPessoal buscarConta(Cliente cliente) {
+    public static void sacar(int tipoConta, double valor) {
+            ContaPessoal conta = buscarConta(Main.getUsuario(), tipoConta);
+            conta.setSaldo(conta.getSaldo() - valor);
+    }
+
+    public static ContaPessoal buscarConta(Cliente cliente, int tipoConta) {
         ContaPessoalDAO contaPessoalDao = new ContaPessoalDAO();
         ArrayList<ContaPessoal> contas = new ArrayList<>(contaPessoalDao.buscarContas());
-        
+
         for(ContaPessoal contaPessoal : contas){
             if(contaPessoal.getCliente().equals(cliente)){
-                return contaPessoal;
+                if(tipoConta == 1 && contaPessoal instanceof ContaCorrente){
+                    return contaPessoal;
+                } else if(tipoConta == 2 && contaPessoal instanceof ContaPoupanca){
+                    return contaPessoal;
+                } else if (tipoConta == 3 && contaPessoal instanceof ContaCredito){
+                    return contaPessoal;
+                }
             }
         }
         return null;

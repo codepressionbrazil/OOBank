@@ -16,13 +16,16 @@ import java.util.Scanner;
 public class Main {
 
     static Scanner sc = new Scanner(System.in);
-    static Cliente clienteLogado;
-    static Gerente gerenteLogado;
+    static Cliente clienteLogado = null;
+    static Gerente gerenteLogado = null;
 
     public static void main(String[] args) {
         login();
     }
 
+    public static Cliente getUsuario(){
+        return clienteLogado;
+    }
 
     private static void login() {
         System.out.println("1- Cliente\n2- Gerente");
@@ -90,34 +93,35 @@ public class Main {
 
     private static void menuCliente() {
         System.out.println("Deseja fazer o que? 1- Criar conta pessoal\n2- Sacar\n3- Depositar\n4- Transferir");
-        int opcao = sc.nextInt();
-        if (opcao == 1) {
-            System.out.println("Agencia: ");
-            int agencia = sc.nextInt();
-            System.out.println("Numero: ");
-            int numero = sc.nextInt();
-            System.out.println("Senha: ");
-            String senha = sc.next();
-            new ContaPessoal(agencia, numero, senha, clienteLogado);
-            System.out.println("Conta pessoal criada!");
-        } else if (opcao == 2) {
-            if(tipoConta() == 1){
+        int opcaoMenu = sc.nextInt();
+        while(opcaoMenu != 5) {
+
+            if (opcaoMenu == 1) {
+                System.out.println("Agencia: ");
+                int agencia = sc.nextInt();
+                System.out.println("Numero: ");
+                int numero = sc.nextInt();
+                System.out.println("Senha: ");
+                String senha = sc.next();
+                new ContaPessoal(agencia, numero, senha, clienteLogado, 0.0);
+                System.out.println("Conta pessoal criada!");
+                menuCliente();
+            } else if (opcaoMenu == 2) {
+                int tipoConta = tipoConta();
                 System.out.println("Quanto deseja sacar? ");
                 double sacar = sc.nextDouble();
-//                ContaPessoalController.sacar();
-            } else if(tipoConta() == 2){
+                ContaPessoalController.sacar(tipoConta, sacar);
 
-            } else if(tipoConta() == 3){
+            } else if (opcaoMenu == 3) {
+                int tipoConta = tipoConta();
+                System.out.println(ContaPessoalController.buscarConta(Main.getUsuario(), tipoConta).toString());
+            } else if (opcaoMenu == 4) {
 
             }
-        } else if (opcao == 3) {
-
-        } else if (opcao == 4) {
-
         }
     }
 
-    public static int tipoConta(){
+    public static int tipoConta() {
         System.out.println("1- Conta corrente\n2- Conta poupanca\n3- Conta credito");
         return sc.nextInt();
     }
