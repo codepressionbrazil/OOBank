@@ -25,7 +25,4 @@ public class ClienteDAO {
         return true;
     }
 
-    public Set buscarCliente() {
-        return Collections.unmodifiableSet(listaClientes);
-    }
 }
