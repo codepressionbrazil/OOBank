@@ -30,7 +30,7 @@ public class ClienteService {
     }
 
     public Cliente buscarCliente(String usuario, String senha) {
-        ArrayList<Cliente> listaCliente = new ArrayList<>(clienteDAO.buscarCliente());
+        ArrayList<Cliente> listaCliente = new ArrayList<>(clienteDAO.buscarClientes());
         for (Cliente c : listaCliente) {
             if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
                 return c;
