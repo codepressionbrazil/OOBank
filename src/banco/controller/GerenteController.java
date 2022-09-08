@@ -1,9 +1,13 @@
 package banco.controller;
 
+import banco.model.entities.Gerente;
 import banco.model.service.ClienteService;
 import banco.model.service.GerenteService;
 
 public class GerenteController {
+
+    static GerenteService gerenteService = new GerenteService();
+
     public boolean logar(String usuario, String senha) {
         return new GerenteService().logar(usuario, senha);
     }
@@ -14,5 +18,9 @@ public class GerenteController {
 
     public String listarClientes() {
         return new ClienteService().listarCLientes();
+    }
+
+    public Gerente buscarGerente(String usuario, String senha) {
+        return gerenteService.buscarGerente(usuario, senha);
     }
 }

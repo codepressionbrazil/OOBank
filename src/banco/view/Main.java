@@ -2,16 +2,27 @@ package banco.view;
 
 import banco.controller.ClienteController;
 import banco.controller.GerenteController;
+import banco.model.entities.Cliente;
+import banco.model.entities.ContaPessoal;
+import banco.model.entities.Gerente;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Scanner;
 
 public class Main {
 
     static Scanner sc = new Scanner(System.in);
+    static Cliente clienteLogado;
+    static Gerente gerenteLogado;
 
     public static void main(String[] args) {
+
+        System.out.println("yyyy/mm/dd HH:mm -> " + dtf5.ZonedDateTime.now());
+        System.out.println(LocalDateTime.now());
         login();
     }
+
 
     private static void login() {
         System.out.println("1- Cliente\n2- Gerente");
@@ -34,11 +45,13 @@ public class Main {
         if (tipo == 1) {
             ClienteController clienteController = new ClienteController();
             if (clienteController.logar(usuario, senha)) {
+                clienteLogado = clienteController.buscarCliente(usuario, senha);
                 menuCliente();
             }
         } else if (tipo == 2) {
             GerenteController gerenteController = new GerenteController();
             if (gerenteController.logar(usuario, senha)) {
+                gerenteLogado = gerenteController.buscarGerente(usuario, senha);
                 menuGerente();
             }
         }
@@ -76,7 +89,23 @@ public class Main {
     }
 
     private static void menuCliente() {
-        System.out.println("dshjifbgdfhjubg");
-    }
+        System.out.println("Deseja fazer o que? 1- Criar conta pessoal\n2- Sacar\n3- Depositar\n4- Transferir");
+        int opcao = sc.nextInt();
+        if (opcao == 1) {
+            System.out.println("Agencia: ");
+            int agencia = sc.nextInt();
+            System.out.println("Numero: ");
+            int numero = sc.nextInt();
+            System.out.println("Senha: ");
+            String senha = sc.next();
+            new ContaPessoal(agencia, numero, senha, clienteLogado);
+            System.out.println("Conta pessoal criada!");
+        } else if (opcao == 2) {
 
+        } else if (opcao == 3) {
+
+        } else if (opcao == 4) {
+
+        }
+    }
 }

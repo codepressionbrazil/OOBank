@@ -15,4 +15,14 @@ public class GerenteService {
         }
         return false;
     }
+
+    public Gerente buscarGerente(String usuario, String senha) {
+        ArrayList<Gerente> listaGerente = new ArrayList<>(GerenteDAO.buscarGerentes());
+        for(Gerente g : listaGerente){
+            if(g.getNome().equals(usuario) && g.getSenha().equals(senha)){
+                return g;
+            }
+        }
+        return null;
+    }
 }

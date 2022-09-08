@@ -19,4 +19,5 @@ public class GerenteDAO {
     public static Set buscarGerentes() {
         return Collections.unmodifiableSet(listaGerentes);
     }
+
 }
