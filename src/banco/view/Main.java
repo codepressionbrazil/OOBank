@@ -104,7 +104,7 @@ public class Main {
             if(tipoConta() == 1){
                 System.out.println("Quanto deseja sacar? ");
                 double sacar = sc.nextDouble();
-                ContaPessoalController.sacar();
+//                ContaPessoalController.sacar();
             } else if(tipoConta() == 2){
 
             } else if(tipoConta() == 3){
