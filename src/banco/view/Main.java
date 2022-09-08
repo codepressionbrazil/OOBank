@@ -1,8 +1,10 @@
 package banco.view;
 
 import banco.controller.ClienteController;
+import banco.controller.ContaPessoalController;
 import banco.controller.GerenteController;
 import banco.model.entities.Cliente;
+import banco.model.entities.ContaCorrente;
 import banco.model.entities.ContaPessoal;
 import banco.model.entities.Gerente;
 
@@ -99,11 +101,25 @@ public class Main {
             new ContaPessoal(agencia, numero, senha, clienteLogado);
             System.out.println("Conta pessoal criada!");
         } else if (opcao == 2) {
+            if(tipoConta() == 1){
+                System.out.println("Quanto deseja sacar? ");
+                double sacar = sc.nextDouble();
+                ContaPessoalController.sacar();
+            } else if(tipoConta() == 2){
 
+            } else if(tipoConta() == 3){
+
+            }
         } else if (opcao == 3) {
 
         } else if (opcao == 4) {
 
         }
     }
+
+    public static int tipoConta(){
+        System.out.println("1- Conta corrente\n2- Conta poupanca\n3- Conta credito");
+        return sc.nextInt();
+    }
+
 }
