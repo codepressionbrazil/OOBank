@@ -8,6 +8,7 @@ import banco.model.entities.Gerente;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -17,9 +18,6 @@ public class Main {
     static Gerente gerenteLogado;
 
     public static void main(String[] args) {
-
-        System.out.println("yyyy/mm/dd HH:mm -> " + dtf5.ZonedDateTime.now());
-        System.out.println(LocalDateTime.now());
         login();
     }
 
