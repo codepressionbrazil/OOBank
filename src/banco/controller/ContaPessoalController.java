@@ -18,6 +18,6 @@ public class ContaPessoalController {
 
     public static void depositar(int tipoConta, int numero, double valor) {
         ContaPessoalService contaPessoalService = new ContaPessoalService();
-//        return contaPessoalService.depositar(tipoConta, numero);
+        contaPessoalService.depositar(tipoConta, numero, valor);
     }
 }
