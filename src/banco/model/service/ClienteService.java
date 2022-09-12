@@ -12,11 +12,15 @@ public class ClienteService {
     static ClienteDAO clienteDAO = new ClienteDAO();
 
     public boolean logar(String usuario, String senha) {
-        ArrayList<Cliente> listaClientes = new ArrayList<>(ClienteDAO.buscarClientes());
-        for (Cliente c : listaClientes) {
-            if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
-                return true;
+        try{
+            ArrayList<Cliente> listaClientes = new ArrayList<>(ClienteDAO.buscarClientes());
+            for (Cliente c : listaClientes) {
+                if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
+                    return true;
+                }
             }
+        }catch (SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
         }
         return false;
     }
@@ -32,16 +36,20 @@ public class ClienteService {
         }
     }
 
-    public String listarCLientes() {
+    public String listarCLientes() throws SQLException {
         return ClienteDAO.buscarClientes().toString();
     }
 
     public Cliente buscarCliente(String usuario, String senha) {
-        ArrayList<Cliente> listaCliente = new ArrayList<>(clienteDAO.buscarClientes());
-        for (Cliente c : listaCliente) {
-            if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
-                return c;
+        try{
+            ArrayList<Cliente> listaCliente = new ArrayList<>(clienteDAO.buscarClientes());
+            for (Cliente c : listaCliente) {
+                if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
+                    return c;
+                }
             }
+        } catch (SQLException err){
+            JOptionPane.showMessageDialog(null, "Error no buscar clientes: " + err.getMessage());
         }
         return null;
     }

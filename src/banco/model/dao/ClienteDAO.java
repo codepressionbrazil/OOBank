@@ -25,7 +25,20 @@ public class ClienteDAO {
     }
 
 
-    public static Set buscarClientes() {
+    public static Set buscarClientes() throws SQLException {
+        String sqlCommand = "select * from clientes";
+        pstm = conn.prepareStatement(sqlCommand);
+        rs = pstm.executeQuery();
+        HashSet listaClientes = new HashSet();
+        while(rs.next()){
+            listaClientes.add(new Cliente(rs.getString("nome"),
+                    rs.getString("endereco"),
+                    rs.getString("cpf"),
+                    rs.getString("profissao"),
+                    rs.getDouble("renda"),
+                    rs.getString("senha")
+                    ));
+        }
         return Collections.unmodifiableSet(listaClientes);
     }
 

@@ -4,6 +4,9 @@ import banco.model.entities.Gerente;
 import banco.model.service.ClienteService;
 import banco.model.service.GerenteService;
 
+import javax.swing.*;
+import java.sql.SQLException;
+
 public class GerenteController {
 
     static GerenteService gerenteService = new GerenteService();
@@ -17,7 +20,12 @@ public class GerenteController {
     }
 
     public String listarClientes() {
-        return new ClienteService().listarCLientes();
+        try{
+            return new ClienteService().listarCLientes();
+        }catch (SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
+        return "Error, não cadastrou";
     }
 
     public Gerente buscarGerente(String usuario, String senha) {
