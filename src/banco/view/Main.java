@@ -8,6 +8,7 @@ import banco.model.entities.ContaCorrente;
 import banco.model.entities.ContaPessoal;
 import banco.model.entities.Gerente;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -97,7 +98,8 @@ public class Main {
     }
 
     private static void menuCliente() {
-        System.out.println("Deseja fazer o que? \n1- Criar conta pessoal\n2- Sacar\n3- Depositar\n4- Transferir\n5- Sair");
+        System.out.println("Deseja fazer o que? \n1- Criar conta pessoal\n2- Sacar\n3- Depositar" +
+                "\n4- Transferir\n5- Mostrar conta\n6- Sair");
         int opcaoMenu = sc.nextInt();
         while (opcaoMenu != 5) {
             if (opcaoMenu == 1) {
@@ -120,10 +122,19 @@ public class Main {
                 int tipoConta = tipoConta();
                 System.out.println("Depositar para qual conta (numero contaPessoal): ");
                 int numero = sc.nextInt();
-                ContaPessoalController.depositar(tipoConta, numero);
-                System.out.println(ContaPessoalController.buscarConta(Main.getUsuario(), tipoConta).toString());
+                System.out.println("Quanto deseja depositar: ");
+                double valor = sc.nextDouble();
+                ContaPessoalController.depositar(tipoConta, numero, valor);
+                menuCliente();
             } else if (opcaoMenu == 4) {
-
+                menuCliente();
+            } else if(opcaoMenu == 5){
+                int tipoConta = tipoConta();
+//                ContaPessoal conta = ContaPessoalController.buscarConta(Main.getUsuario(), tipoConta).toString());
+//                JOptionPane.showMessageDialog(null, conta);
+                menuCliente();
+            } else if(opcaoMenu == 6){
+                login();
             }
         }
     }
