@@ -3,6 +3,8 @@ package banco.model.service;
 import banco.model.dao.ClienteDAO;
 import banco.model.entities.Cliente;
 
+import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ClienteService {
@@ -22,7 +24,12 @@ public class ClienteService {
 
     public boolean cadastrar(String nome, String senha, String endereco, String cpf, String profissao, Double renda) {
         Cliente cliente = new Cliente(nome, endereco, cpf, profissao, renda, senha);
-        return clienteDAO.cadastrar(cliente);
+        try{
+            return clienteDAO.cadastrar(cliente);
+        }catch (SQLException err){
+            JOptionPane.showMessageDialog(null, "Error: " + err.getMessage());
+            return false;
+        }
     }
 
     public String listarCLientes() {

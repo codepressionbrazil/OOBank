@@ -35,9 +35,9 @@ public class ContaPessoalService {
         ArrayList<ContaPessoal> contas = new ArrayList<>(contaPessoalDAO.buscarContas());
 
         for(ContaPessoal contaPessoal : contas){
-            if(){
-
-            }
+//            if(){
+//
+//            }
         }
     }
 }
