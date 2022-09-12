@@ -15,8 +15,7 @@ public class ContaPessoalController {
         return contaPessoalService.buscarConta(c, tipoConta);
     }
 
-    public static void depositar(int tipoConta, int numero) {
-        ContaPessoalService contaPessoalService = new ContaPessoalService();
-        return contaPessoalService.depositar(tipoConta, numero);
+    public static void depositar(int tipoConta, int numero, double valor) {
+        ContaPessoalService.depositar(tipoConta, numero, valor);
     }
 }
