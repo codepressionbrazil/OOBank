@@ -44,9 +44,10 @@ public class ClienteService {
         try{
             ArrayList<Cliente> listaCliente = new ArrayList<>(clienteDAO.buscarClientes());
             for (Cliente c : listaCliente) {
-                if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
-                    return c;
-                }
+                System.out.println(c.toString());
+//                if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
+//                    return c;
+//                }
             }
         } catch (SQLException err){
             JOptionPane.showMessageDialog(null, "Error no buscar clientes: " + err.getMessage());

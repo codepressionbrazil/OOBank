@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Teste {
     static MySQLConnection conexao = new MySQLConnection();
@@ -43,6 +45,8 @@ public class Teste {
         String sqlCommand = "select * from clientes";
         pstm = conn.prepareStatement(sqlCommand);
         rs = pstm.executeQuery();
+
+//        HashSet
 
         while(rs.next()){
             System.out.println(rs.getString("nome"));
