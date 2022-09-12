@@ -1,9 +1,6 @@
 package banco.model.dao;
 
-import banco.model.entities.Cliente;
-import banco.model.entities.ContaCorrente;
-import banco.model.entities.ContaCredito;
-import banco.model.entities.ContaPessoal;
+import banco.model.entities.*;
 import banco.model.service.ClienteService;
 
 import java.util.Collections;
@@ -20,9 +17,11 @@ public class ContaPessoalDAO {
                 clienteService.buscarCliente("Diego", "123"), 5000.0));
         listaContaPessoal.add(new ContaCredito(1313, 2, "123",
                 clienteService.buscarCliente("Gabriel", "321"), 10000.0));
+        listaContaPessoal.add(new ContaPoupanca(1414, 3, "123",
+                clienteService.buscarCliente("Leonardo", "456"), 7000.00));
     }
 
-    public static Set buscarContas(){
+    public static Set buscarContas() {
         return Collections.unmodifiableSet(listaContaPessoal);
     }
 

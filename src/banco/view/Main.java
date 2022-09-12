@@ -23,7 +23,7 @@ public class Main {
         login();
     }
 
-    public static Cliente getUsuario(){
+    public static Cliente getUsuario() {
         return clienteLogado;
     }
 
@@ -50,14 +50,19 @@ public class Main {
             if (clienteController.logar(usuario, senha)) {
                 clienteLogado = clienteController.buscarCliente(usuario, senha);
                 menuCliente();
+            } else {
+                System.out.println("Erro ao logar-se");
             }
         } else if (tipo == 2) {
             GerenteController gerenteController = new GerenteController();
             if (gerenteController.logar(usuario, senha)) {
                 gerenteLogado = gerenteController.buscarGerente(usuario, senha);
                 menuGerente();
+            } else {
+                System.out.println("Erro ao logar-se");
             }
         }
+        login();
     }
 
     private static void menuGerente() {
@@ -92,10 +97,9 @@ public class Main {
     }
 
     private static void menuCliente() {
-        System.out.println("Deseja fazer o que? 1- Criar conta pessoal\n2- Sacar\n3- Depositar\n4- Transferir");
+        System.out.println("Deseja fazer o que? \n1- Criar conta pessoal\n2- Sacar\n3- Depositar\n4- Transferir\n5- Sair");
         int opcaoMenu = sc.nextInt();
-        while(opcaoMenu != 5) {
-
+        while (opcaoMenu != 5) {
             if (opcaoMenu == 1) {
                 System.out.println("Agencia: ");
                 int agencia = sc.nextInt();
@@ -111,9 +115,12 @@ public class Main {
                 System.out.println("Quanto deseja sacar? ");
                 double sacar = sc.nextDouble();
                 ContaPessoalController.sacar(tipoConta, sacar);
-
+                menuCliente();
             } else if (opcaoMenu == 3) {
                 int tipoConta = tipoConta();
+                System.out.println("Depositar para qual conta (numero contaPessoal): ");
+                int numero = sc.nextInt();
+                ContaPessoalController.depositar(tipoConta, numero);
                 System.out.println(ContaPessoalController.buscarConta(Main.getUsuario(), tipoConta).toString());
             } else if (opcaoMenu == 4) {
 

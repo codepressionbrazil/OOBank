@@ -29,4 +29,15 @@ public class ContaPessoalService {
         }
         return null;
     }
+
+    public void depositar(int tipoConta, int numero) {
+        ContaPessoalDAO contaPessoalDAO = new ContaPessoalDAO();
+        ArrayList<ContaPessoal> contas = new ArrayList<>(contaPessoalDAO.buscarContas());
+
+        for(ContaPessoal contaPessoal : contas){
+            if(){
+
+            }
+        }
+    }
 }
