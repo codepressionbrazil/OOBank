@@ -40,9 +40,10 @@ public class Main {
 
     private static void executarLogin(int tipo) {
         System.out.println("Insira seu usuario: ");
-        String usuario = sc.next();
-        System.out.println("Insira sua senha: ");
-        String senha = sc.next();
+        sc.nextLine();
+        String usuario = sc.nextLine();
+        System.out.println("\nInsira sua senha: ");
+        String senha = sc.nextLine();
         if (tipo == 1) {
             ClienteController clienteController = new ClienteController();
             clienteLogado = clienteController.logar(usuario, senha);
@@ -108,7 +109,6 @@ public class Main {
                 System.out.println("Senha: ");
                 String senha = sc.next();
                 ContaPessoalController.cadastrarConta(agencia, numero, senha, clienteLogado);
-                System.out.println("\nConta pessoal criada!\n");
 
             } else if (opcaoMenu == 2) {
                 System.out.println("Numero: ");

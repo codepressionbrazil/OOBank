@@ -4,6 +4,7 @@ import banco.model.dao.ContaPessoalDAO;
 import banco.model.entities.*;
 import banco.view.Main;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ContaPessoalService {
@@ -45,7 +46,11 @@ public class ContaPessoalService {
     }
 
     public static void cadastrarConta(int agencia, int numero, String senha, Cliente clienteLogado) {
-        ContaPessoalDAO.cadastrarConta(new ContaPessoal(agencia, numero, senha, clienteLogado, 0.0));
+        try{
+            ContaPessoalDAO.cadastrarConta(new ContaPessoal(agencia, numero, senha, clienteLogado, 0.0));
+        } catch (SQLException err){
+            System.out.println("Erro: " + err.getMessage());
+        }
     }
 
     public static void mostrarConta(int numero, String senha) {

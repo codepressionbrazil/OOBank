@@ -18,11 +18,11 @@ public class Cliente {
     public String toString() {
         return "Cliente --> " +
                 "Nome: " + nome +
-                "Endereco: " + endereco +
-                "Cpf: " + cpf +
-                "Profissao: " + profissao +
-                "Senha: " + senha +
-                "Renda: " + renda;
+                " - Endereco: " + endereco +
+                " - Cpf: " + cpf +
+                " - Profissao: " + profissao +
+                " - Senha: " + senha +
+                " - Renda: " + renda;
     }
 
     public String getNome() {
