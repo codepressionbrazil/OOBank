@@ -8,7 +8,6 @@ public class ContaPessoal {
     private Double saldo;
 
 
-
     public static void depositar() {
     }
 
@@ -17,13 +16,12 @@ public class ContaPessoal {
 
     @Override
     public String toString() {
-        return "ContaPessoal{" +
-                "agencia=" + agencia +
-                ", numero=" + numero +
-                ", senha='" + senha + '\'' +
-                ", cliente=" + cliente +
-                ", saldo=" + saldo +
-                '}';
+        return "ContaPessoal --> " +
+                "Agencia: " + agencia +
+                "\nNúmero: " + numero +
+                "\nSenha: " + senha +
+                "\nCliente: " + cliente +
+                "\nSaldo: " + saldo;
     }
 
     public ContaPessoal(Integer agencia, Integer numero, String senha, Cliente cliente, Double saldo) {

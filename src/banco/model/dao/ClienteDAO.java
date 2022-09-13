@@ -12,11 +12,11 @@ import java.util.Set;
 
 public class ClienteDAO {
     private static final Set<Cliente> listaClientes = new HashSet<>();
-    static MySQLConnection conexao = new MySQLConnection();
-    static Connection conn = conexao.conectaDB();
-    static PreparedStatement pstm;
-    static ResultSet rs;
-    static UpdateResult ur;
+//    static MySQLConnection conexao = new MySQLConnection();
+//    static Connection conn = conexao.conectaDB();
+//    static PreparedStatement pstm;
+//    static ResultSet rs;
+//    static UpdateResult ur;
 
     static {
         listaClientes.add(new Cliente("Diego", "Rua tal", "123", "DEV BACKEND", 7000.00, "123"));
