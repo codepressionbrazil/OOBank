@@ -6,18 +6,33 @@ import banco.model.service.ContaPessoalService;
 
 public class ContaPessoalController {
 
-    public static ContaPessoal buscarConta(Cliente c, int tipoConta) {
-        ContaPessoalService contaPessoalService = new ContaPessoalService();
-        return contaPessoalService.buscarConta(c, tipoConta);
-    }
 
-    public static void sacar(int tipoConta, double valor) {
-        ContaPessoalService.sacar(tipoConta, valor);
+    public static void sacar(int numero, String senha, double valor) {
+        ContaPessoalService.sacar(numero, senha, valor);
     }
 
 
-    public static void depositar(int tipoConta, int numero, double valor) {
-        ContaPessoalService contaPessoalService = new ContaPessoalService();
-        contaPessoalService.depositar(tipoConta, numero, valor);
+    public static void depositar(int numero, double valor) {
+        ContaPessoalService.depositar(numero, valor);
+    }
+
+    public static void cadastrarConta(int agencia, int numero, String senha, Cliente clienteLogado) {
+        ContaPessoalService.cadastrarConta(agencia, numero, senha, clienteLogado);
+    }
+
+    public static void mostrarConta(int numero, String senha) {
+        ContaPessoalService.mostrarConta(numero, senha);
+    }
+
+    public static ContaPessoal verificaConta(int numero, String senha) {
+        return ContaPessoalService.verificaConta(numero, senha);
+    }
+
+    public static void tranferir(ContaPessoal conta, int numeroBeneficiado, double valorTransferencia) {
+        ContaPessoalService.trasferir(conta, numeroBeneficiado, valorTransferencia);
+    }
+
+    public static void atualizarRendas() {
+        ContaPessoalService.atualizarRendas();
     }
 }

@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ClienteDAO {
-    private static Set<Cliente> listaClientes = new HashSet<>();
+    private static final Set<Cliente> listaClientes = new HashSet<>();
     static MySQLConnection conexao = new MySQLConnection();
     static Connection conn = conexao.conectaDB();
     static PreparedStatement pstm;
@@ -26,33 +26,35 @@ public class ClienteDAO {
 
 
     public static Set buscarClientes() throws SQLException {
-        String sqlCommand = "select * from clientes";
-        pstm = conn.prepareStatement(sqlCommand);
-        rs = pstm.executeQuery();
-        HashSet listaClientes = new HashSet();
-        while(rs.next()){
-            listaClientes.add(new Cliente(rs.getString("nome"),
-                    rs.getString("endereco"),
-                    rs.getString("cpf"),
-                    rs.getString("profissao"),
-                    rs.getDouble("renda"),
-                    rs.getString("senha")
-                    ));
-        }
+//        String sqlCommand = "select * from clientes";
+//        pstm = conn.prepareStatement(sqlCommand);
+//        rs = pstm.executeQuery();
+//        HashSet listaClientes = new HashSet();
+//        while(rs.next()){
+//            listaClientes.add(new Cliente(rs.getString("nome"),
+//                    rs.getString("endereco"),
+//                    rs.getString("cpf"),
+//                    rs.getString("profissao"),
+//                    rs.getDouble("renda"),
+//                    rs.getString("senha")
+//                    ));
+//        }
         return Collections.unmodifiableSet(listaClientes);
     }
 
     public boolean cadastrar(Cliente cliente) throws SQLException {
-        String sqlCommand = "insert into clientes (nome,  senha, endereco, cpf, profissao, renda) values (?, ?, ?, ?, ?, ?)";
-        pstm = conn.prepareStatement(sqlCommand);
-        pstm.setString(1, cliente.getNome());
-        pstm.setString(2, cliente.getSenha());
-        pstm.setString(3, cliente.getEndereco());
-        pstm.setString(4, cliente.getCpf());
-        pstm.setString(5, cliente.getProfissao());
-        pstm.setString(6, String.valueOf(cliente.getRenda()));
-        pstm.execute();
-        conn.close();
+//        String sqlCommand = "insert into clientes (nome,  senha, endereco, cpf, profissao, renda) values (?, ?, ?, ?, ?, ?)";
+//        pstm = conn.prepareStatement(sqlCommand);
+//        pstm.setString(1, cliente.getNome());
+//        pstm.setString(2, cliente.getSenha());
+//        pstm.setString(3, cliente.getEndereco());
+//        pstm.setString(4, cliente.getCpf());
+//        pstm.setString(5, cliente.getProfissao());
+//        pstm.setString(6, String.valueOf(cliente.getRenda()));
+//        pstm.execute();
+//        conn.close();
+//        return true;
+        listaClientes.add(cliente);
         return true;
     }
 

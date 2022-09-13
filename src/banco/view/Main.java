@@ -3,15 +3,11 @@ package banco.view;
 import banco.controller.ClienteController;
 import banco.controller.ContaPessoalController;
 import banco.controller.GerenteController;
+import banco.model.dao.ContaPessoalDAO;
 import banco.model.entities.Cliente;
-import banco.model.entities.ContaCorrente;
 import banco.model.entities.ContaPessoal;
 import banco.model.entities.Gerente;
 
-import javax.swing.*;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -21,6 +17,7 @@ public class Main {
     static Gerente gerenteLogado = null;
 
     public static void main(String[] args) {
+        ContaPessoalController.atualizarRendas();
         login();
     }
 
@@ -29,7 +26,7 @@ public class Main {
     }
 
     private static void login() {
-        System.out.println("1- Cliente\n2- Gerente");
+        System.out.print("Opção de login:\n1- Cliente\n2- Gerente\n-->: ");
         int opcao = sc.nextInt();
         switch (opcao) {
             case 1 -> {
@@ -48,16 +45,17 @@ public class Main {
         String senha = sc.next();
         if (tipo == 1) {
             ClienteController clienteController = new ClienteController();
-            if (clienteController.logar(usuario, senha)) {
-                clienteLogado = clienteController.buscarCliente(usuario, senha);
+            clienteLogado = clienteController.logar(usuario, senha);
+
+            if (clienteLogado != null) {
                 menuCliente();
             } else {
                 System.out.println("Erro ao logar-se");
             }
         } else if (tipo == 2) {
             GerenteController gerenteController = new GerenteController();
-            if (gerenteController.logar(usuario, senha)) {
-                gerenteLogado = gerenteController.buscarGerente(usuario, senha);
+            gerenteLogado = gerenteController.logar(usuario, senha);
+            if (gerenteLogado != null) {
                 menuGerente();
             } else {
                 System.out.println("Erro ao logar-se");
@@ -98,10 +96,10 @@ public class Main {
     }
 
     private static void menuCliente() {
-        System.out.println("Deseja fazer o que? \n1- Criar conta pessoal\n2- Sacar\n3- Depositar" +
-                "\n4- Transferir\n5- Mostrar conta\n6- Sair");
+        System.out.print("Deseja fazer o que? \n1- Criar conta pessoal\n2- Sacar\n3- Depositar" +
+                "\n4- Transferir\n5- Mostrar conta\n6- Sair\n-->: ");
         int opcaoMenu = sc.nextInt();
-        while (opcaoMenu != 5) {
+        while (opcaoMenu != 6) {
             if (opcaoMenu == 1) {
                 System.out.println("Agencia: ");
                 int agencia = sc.nextInt();
@@ -109,39 +107,55 @@ public class Main {
                 int numero = sc.nextInt();
                 System.out.println("Senha: ");
                 String senha = sc.next();
-                new ContaPessoal(agencia, numero, senha, clienteLogado, 0.0);
-                System.out.println("Conta pessoal criada!");
-                menuCliente();
+                ContaPessoalController.cadastrarConta(agencia, numero, senha, clienteLogado);
+                System.out.println("\nConta pessoal criada!\n");
+
             } else if (opcaoMenu == 2) {
-                int tipoConta = tipoConta();
+                System.out.println("Numero: ");
+                int numero = sc.nextInt();
+                System.out.println("Senha: ");
+                String senha = sc.next();
                 System.out.println("Quanto deseja sacar? ");
-                double sacar = sc.nextDouble();
-                ContaPessoalController.sacar(tipoConta, sacar);
-                menuCliente();
+                double valor = sc.nextDouble();
+                ContaPessoalController.sacar(numero, senha, valor);
+                System.out.println("Saque concluído com sucesso!\n");
+
             } else if (opcaoMenu == 3) {
-                int tipoConta = tipoConta();
                 System.out.println("Depositar para qual conta (numero contaPessoal): ");
                 int numero = sc.nextInt();
                 System.out.println("Quanto deseja depositar: ");
                 double valor = sc.nextDouble();
-                ContaPessoalController.depositar(tipoConta, numero, valor);
-                menuCliente();
+                ContaPessoalController.depositar(numero, valor);
+                System.out.println("Depósito concluído com sucesso!\n");
+
             } else if (opcaoMenu == 4) {
-                menuCliente();
+                System.out.println("Numero: ");
+                int numero = sc.nextInt();
+                System.out.println("Senha: ");
+                String senha = sc.next();
+                ContaPessoal conta = ContaPessoalController.verificaConta(numero, senha);
+                if(conta != null){
+                    System.out.println("Conta do beneficiado: ");
+                    int numeroBeneficiado = sc.nextInt();
+                    System.out.println("Valor da transferência: ");
+                    double valorTransferencia = sc.nextDouble();
+                    ContaPessoalController.tranferir(conta, numeroBeneficiado, valorTransferencia);
+                    System.out.println("Transferência concluída com sucesso!");
+                }
             } else if(opcaoMenu == 5){
-                int tipoConta = tipoConta();
-//                ContaPessoal conta = ContaPessoalController.buscarConta(Main.getUsuario(), tipoConta).toString());
-//                JOptionPane.showMessageDialog(null, conta);
-                menuCliente();
+                System.out.print("Número da conta: ");
+                int numero = sc.nextInt();
+                System.out.print("Senha: ");
+                String senha = sc.next();
+                ContaPessoalController.mostrarConta(numero, senha);
+
             } else if(opcaoMenu == 6){
                 login();
             }
+            System.out.print("Deseja fazer o que? \n1- Criar conta pessoal\n2- Sacar\n3- Depositar" +
+                    "\n4- Transferir\n5- Mostrar conta\n6- Sair\n-->: ");
+            opcaoMenu = sc.nextInt();
         }
-    }
-
-    public static int tipoConta() {
-        System.out.println("1- Conta corrente\n2- Conta poupanca\n3- Conta credito");
-        return sc.nextInt();
     }
 
 }

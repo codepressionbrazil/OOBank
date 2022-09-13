@@ -16,13 +16,14 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "\nCliente: " +
-                "\tnome: " + nome +
-                "\tendereco: " + endereco +
-                "\tcpf: " + cpf +
-                "\tprofissao: " + profissao +
-                "\tsenha: " + senha +
-                "\trenda: " + renda;
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", profissao='" + profissao + '\'' +
+                ", senha='" + senha + '\'' +
+                ", renda=" + renda +
+                '}';
     }
 
     public String getNome() {

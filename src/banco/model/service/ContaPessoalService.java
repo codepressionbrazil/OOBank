@@ -8,49 +8,89 @@ import java.util.ArrayList;
 
 public class ContaPessoalService {
 
-    public static void sacar(int tipoConta, double valor) {
-        ContaPessoal conta = buscarConta(Main.getUsuario(), tipoConta);
-        conta.setSaldo(conta.getSaldo() - valor);
-    }
-
-    public static ContaPessoal buscarConta(Cliente cliente, int tipoConta) {
-        ContaPessoalDAO contaPessoalDao = new ContaPessoalDAO();
-        ArrayList<ContaPessoal> contas = new ArrayList<>(contaPessoalDao.buscarContas());
-
-        for (ContaPessoal contaPessoal : contas) {
-            if (contaPessoal.getCliente().equals(cliente)) {
-                if (tipoConta == 1 && contaPessoal instanceof ContaCorrente) {
-                    return contaPessoal;
-                } else if (tipoConta == 2 && contaPessoal instanceof ContaPoupanca) {
-                    return contaPessoal;
-                } else if (tipoConta == 3 && contaPessoal instanceof ContaCredito) {
-                    return contaPessoal;
-                }
+    public static void sacar(int numero, String senha, double valor) {
+        ContaPessoal conta = buscarContaNumero(numero);
+        if (conta != null) {
+            if (conta.getSenha().equals(senha)) {
+                ContaPessoalDAO.sacar(conta, valor);
+            } else {
+                System.out.println("Senha incorreta!");
             }
+        } else {
+            System.out.println("Conta não encontrada!");
         }
-        return null;
+
+
     }
 
 
-    public static ContaPessoal buscarContaNumero(int tipoConta, int numero) {
+    public static ContaPessoal buscarContaNumero(int numero) {
         ContaPessoalDAO contaPessoalDao = new ContaPessoalDAO();
         ArrayList<ContaPessoal> contas = new ArrayList<>(contaPessoalDao.buscarContas());
         for (ContaPessoal contaPessoal : contas) {
             if (contaPessoal.getNumero() == numero) {
-                if (tipoConta == 1 && contaPessoal instanceof ContaCorrente) {
-                    return contaPessoal;
-                } else if (tipoConta == 2 && contaPessoal instanceof ContaPoupanca) {
-                    return contaPessoal;
-                } else if (tipoConta == 3 && contaPessoal instanceof ContaCredito) {
-                    return contaPessoal;
-                }
+                return contaPessoal;
             }
         }
         return null;
     }
 
-    public static void depositar(int tipoConta, int numero, double valor) {
-        ContaPessoal conta = buscarContaNumero(tipoConta, numero);
-        conta.setSaldo(conta.getSaldo() + valor);
+    public static void depositar(int numero, double valor) {
+        ContaPessoal conta = buscarContaNumero(numero);
+        if (conta != null) {
+            ContaPessoalDAO.depositar(conta, valor);
+        } else {
+            System.out.println("Conta não encontrada!");
+        }
+    }
+
+    public static void cadastrarConta(int agencia, int numero, String senha, Cliente clienteLogado) {
+        ContaPessoalDAO.cadastrarConta(new ContaPessoal(agencia, numero, senha, clienteLogado, 0.0));
+    }
+
+    public static void mostrarConta(int numero, String senha) {
+        ContaPessoal conta = buscarContaNumero(numero);
+        if (conta != null) {
+            if(conta.getCliente().equals(Main.getUsuario())){
+                if (conta.getSenha().equals(senha)) {
+                    System.out.println(conta);
+                } else {
+                    System.out.println("Senha incorreta!");
+                }
+            } else {
+                System.out.println("Erro: Conta não encontrada!");
+            }
+        } else {
+            System.out.println("Erro: Conta não encontrada!");
+        }
+    }
+
+    public static ContaPessoal verificaConta(int numero, String senha) {
+        ContaPessoal conta = buscarContaNumero(numero);
+        if (conta != null) {
+            if (conta.getSenha().equals(senha)) {
+                return conta;
+            } else {
+                System.out.println("Senha incorreta!");
+                return null;
+            }
+        }
+        System.out.println("Conta não encontrada!");
+        return null;
+    }
+
+    public static void trasferir(ContaPessoal conta, int numeroBeneficiado, double valorTransferencia) {
+        ContaPessoal contaBeneficiado = buscarContaNumero(numeroBeneficiado);
+        if(contaBeneficiado != null){
+            ContaPessoalDAO.depositar(contaBeneficiado, valorTransferencia);
+            ContaPessoalDAO.sacar(conta, valorTransferencia);
+        } else {
+            System.out.println("Conta do beneficado não encontrada!");
+        }
+
+    }
+
+    public static void atualizarRendas() {
+        ContaPessoalDAO.atualizarRendas();
     }
 }

@@ -11,18 +11,18 @@ public class ClienteService {
 
     static ClienteDAO clienteDAO = new ClienteDAO();
 
-    public boolean logar(String usuario, String senha) {
+    public Cliente logar(String usuario, String senha) {
         try{
             ArrayList<Cliente> listaClientes = new ArrayList<>(ClienteDAO.buscarClientes());
             for (Cliente c : listaClientes) {
                 if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
-                    return true;
+                    return c;
                 }
             }
         }catch (SQLException err){
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
-        return false;
+        return null;
     }
 
 
@@ -44,10 +44,9 @@ public class ClienteService {
         try{
             ArrayList<Cliente> listaCliente = new ArrayList<>(clienteDAO.buscarClientes());
             for (Cliente c : listaCliente) {
-                System.out.println(c.toString());
-//                if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
-//                    return c;
-//                }
+                if (c.getNome().equals(usuario) && c.getSenha().equals(senha)) {
+                    return c;
+                }
             }
         } catch (SQLException err){
             JOptionPane.showMessageDialog(null, "Error no buscar clientes: " + err.getMessage());

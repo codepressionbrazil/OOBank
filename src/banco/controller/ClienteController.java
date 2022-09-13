@@ -7,7 +7,7 @@ public class ClienteController {
 
     static ClienteService clienteService = new ClienteService();
 
-    public boolean logar(String usuario, String senha) {
+    public Cliente logar(String usuario, String senha) {
         return new ClienteService().logar(usuario, senha);
     }
 
