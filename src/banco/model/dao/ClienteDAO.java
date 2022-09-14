@@ -54,9 +54,8 @@ public class ClienteDAO {
         pstm.setString(6, String.valueOf(cliente.getRenda()));
         pstm.execute();
         conn.close();
+        listaClientes.add(cliente);
         return true;
-//        listaClientes.add(cliente);
-//        return true;
     }
 
 }

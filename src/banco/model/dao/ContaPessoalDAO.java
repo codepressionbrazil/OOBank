@@ -68,12 +68,13 @@ public class ContaPessoalDAO {
     }
 
 
-    public static void atualizarRendas() {
+    public static void atualizarRendas() throws SQLException {
         SimpleDateFormat formatador = new SimpleDateFormat("dd");
         Date dataAtual = new Date();
         if(formatador.format(dataAtual).equals("5")){
             for(ContaPessoal contaPessoal : listaContaPessoal){
-                contaPessoal.setSaldo(contaPessoal.getSaldo() + ClienteService.buscarPorCPF(contaPessoal.getClienteCPF()).getRenda());
+                Cliente cliente = ClienteService.buscarPorCPF(contaPessoal.getClienteCPF());
+                depositar(contaPessoal, cliente.getRenda());
             }
         }
     }

@@ -107,7 +107,11 @@ public class ContaPessoalService {
     }
 
     public static void atualizarRendas() {
-        ContaPessoalDAO.atualizarRendas();
+        try{
+            ContaPessoalDAO.atualizarRendas();
+        } catch (SQLException err){
+            System.out.println(err.getMessage());
+        }
     }
 
     public static void buscarDadosBD() {
