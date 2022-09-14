@@ -41,6 +41,7 @@ public class ClienteDAO {
                     rs.getString("senha")
             ));
         }
+        conn.close();
     }
 
     public boolean cadastrar(Cliente cliente) throws SQLException {

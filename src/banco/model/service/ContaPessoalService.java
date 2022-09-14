@@ -11,12 +11,17 @@ public class ContaPessoalService {
 
     public static void sacar(int numero, String senha, double valor) {
         ContaPessoal conta = buscarContaNumero(numero);
+
         if (conta != null) {
             if (conta.getSenha().equals(senha)) {
-                try {
-                    ContaPessoalDAO.sacar(conta, valor);
-                } catch (SQLException err){
-                    System.out.println(err.getMessage());
+                if(valor <= conta.getSaldo()){
+                    try {
+                        ContaPessoalDAO.sacar(conta, valor);
+                    } catch (SQLException err){
+                        System.out.println(err.getMessage());
+                    }
+                } else {
+                    System.out.println("Não é possível sacar mais do que o saldo atual: " + conta.getSaldo());
                 }
             } else {
                 System.out.println("Senha incorreta!");
@@ -41,6 +46,7 @@ public class ContaPessoalService {
 
     public static void depositar(int numero, double valor) {
         ContaPessoal conta = buscarContaNumero(numero);
+
         if (conta != null) {
             try{
                 ContaPessoalDAO.depositar(conta, valor);
@@ -94,11 +100,15 @@ public class ContaPessoalService {
     public static void trasferir(ContaPessoal conta, int numeroBeneficiado, double valorTransferencia) {
         ContaPessoal contaBeneficiado = buscarContaNumero(numeroBeneficiado);
         if(contaBeneficiado != null){
-            try{
-                ContaPessoalDAO.depositar(contaBeneficiado, valorTransferencia);
-                ContaPessoalDAO.sacar(conta, valorTransferencia);
-            } catch (SQLException err){
-                System.out.println(err.getMessage());
+            if(valorTransferencia <= conta.getSaldo()){
+                try{
+                    ContaPessoalDAO.depositar(contaBeneficiado, valorTransferencia);
+                    ContaPessoalDAO.sacar(conta, valorTransferencia);
+                } catch (SQLException err){
+                    System.out.println(err.getMessage());
+                }
+            } else {
+                System.out.println("Não é possível transfeir mais do que o saldo atual: " + conta.getSaldo());
             }
         } else {
             System.out.println("Conta do beneficado não encontrada!");

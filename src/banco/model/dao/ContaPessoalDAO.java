@@ -54,6 +54,7 @@ public class ContaPessoalDAO {
         pstm.setInt(2, conta.getNumero());
         pstm.execute();
         conta.setSaldo(conta.getSaldo() + valor);
+        conn.close();
         System.out.println("Saldo atualizado com sucesso!\n");
     }
 
@@ -64,6 +65,7 @@ public class ContaPessoalDAO {
         pstm.setInt(2, conta.getNumero());
         pstm.execute();
         conta.setSaldo(conta.getSaldo() - valor);
+        conn.close();
         System.out.println("Saque concluído com sucesso!\n");
     }
 
