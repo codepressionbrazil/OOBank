@@ -4,7 +4,7 @@ public class ContaPessoal {
 
     private Integer agencia, numero;
     private String senha;
-    private Cliente cliente;
+    private String cliente_cpf;
     private Double saldo;
 
 
@@ -17,18 +17,18 @@ public class ContaPessoal {
     @Override
     public String toString() {
         return "ContaPessoal --> " +
-                "Agencia: " + agencia +
-                "\nNúmero: " + numero +
-                "\nSenha: " + senha +
-                "\nCliente: " + cliente +
-                "\nSaldo: " + saldo;
+                " | Agencia: " + agencia +
+                " | Número: " + numero +
+                " | Senha: " + senha +
+                " | Cliente: " + cliente_cpf +
+                " | Saldo: " + saldo + "\n";
     }
 
-    public ContaPessoal(Integer agencia, Integer numero, String senha, Cliente cliente, Double saldo) {
+    public ContaPessoal(Integer agencia, Integer numero, String senha, String cliente_cpf, Double saldo) {
         this.agencia = agencia;
         this.numero = numero;
         this.senha = senha;
-        this.cliente = cliente;
+        this.cliente_cpf = cliente_cpf;
         this.saldo = saldo;
     }
 
@@ -64,11 +64,11 @@ public class ContaPessoal {
         this.senha = senha;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public String getClienteCPF() {
+        return cliente_cpf;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(String cliente) {
+        this.cliente_cpf = cliente;
     }
 }

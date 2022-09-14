@@ -17,8 +17,15 @@ public class Main {
     static Gerente gerenteLogado = null;
 
     public static void main(String[] args) {
-        ContaPessoalController.atualizarRendas();
+        atualizarSistema();
         login();
+    }
+
+    public static void atualizarSistema(){
+        ContaPessoalController.atualizarRendas();
+        ContaPessoalController.buscarDadosBD();
+        ClienteController.buscarDadosBD();
+//        GerenteController.buscarDadosBD();
     }
 
     public static Cliente getUsuario() {
@@ -39,10 +46,10 @@ public class Main {
     }
 
     private static void executarLogin(int tipo) {
-        System.out.println("Insira seu usuario: ");
+        System.out.print("Insira seu usuario: ");
         sc.nextLine();
         String usuario = sc.nextLine();
-        System.out.println("\nInsira sua senha: ");
+        System.out.print("\nInsira sua senha: ");
         String senha = sc.nextLine();
         if (tipo == 1) {
             ClienteController clienteController = new ClienteController();
@@ -71,17 +78,17 @@ public class Main {
         int opcao = sc.nextInt();
         if (opcao == 1) {
             System.out.println("Cadastrar Cliente!!!");
-            System.out.println("Nome: ");
+            System.out.print("Nome: ");
             String nome = sc.next();
-            System.out.println("Senha: ");
+            System.out.print("Senha: ");
             String senha = sc.next();
-            System.out.println("Endereco: ");
+            System.out.print("Endereco: ");
             String endereco = sc.next();
-            System.out.println("CPF: ");
+            System.out.print("CPF: ");
             String cpf = sc.next();
-            System.out.println("Profissao: ");
+            System.out.print("Profissao: ");
             String profissao = sc.next();
-            System.out.println("Renda: ");
+            System.out.print("Renda: ");
             Double renda = sc.nextDouble();
             if (gerenteController.cadastrarCliente(nome, senha, endereco, cpf, profissao, renda)) {
                 System.out.println("Cliente cadastrado!");
@@ -108,17 +115,16 @@ public class Main {
                 int numero = sc.nextInt();
                 System.out.println("Senha: ");
                 String senha = sc.next();
-                ContaPessoalController.cadastrarConta(agencia, numero, senha, clienteLogado);
+                ContaPessoalController.cadastrarConta(agencia, numero, senha, clienteLogado.getCpf());
 
             } else if (opcaoMenu == 2) {
-                System.out.println("Numero: ");
+                System.out.println("Numero da conta: ");
                 int numero = sc.nextInt();
                 System.out.println("Senha: ");
                 String senha = sc.next();
                 System.out.println("Quanto deseja sacar? ");
                 double valor = sc.nextDouble();
                 ContaPessoalController.sacar(numero, senha, valor);
-                System.out.println("Saque concluído com sucesso!\n");
 
             } else if (opcaoMenu == 3) {
                 System.out.println("Depositar para qual conta (numero contaPessoal): ");
@@ -126,18 +132,17 @@ public class Main {
                 System.out.println("Quanto deseja depositar: ");
                 double valor = sc.nextDouble();
                 ContaPessoalController.depositar(numero, valor);
-                System.out.println("Depósito concluído com sucesso!\n");
 
             } else if (opcaoMenu == 4) {
-                System.out.println("Numero: ");
+                System.out.print("Numero da conta: ");
                 int numero = sc.nextInt();
-                System.out.println("Senha: ");
+                System.out.print("Senha: ");
                 String senha = sc.next();
                 ContaPessoal conta = ContaPessoalController.verificaConta(numero, senha);
                 if(conta != null){
-                    System.out.println("Conta do beneficiado: ");
+                    System.out.print("Conta do beneficiado: ");
                     int numeroBeneficiado = sc.nextInt();
-                    System.out.println("Valor da transferência: ");
+                    System.out.print("Valor da transferência: ");
                     double valorTransferencia = sc.nextDouble();
                     ContaPessoalController.tranferir(conta, numeroBeneficiado, valorTransferencia);
                     System.out.println("Transferência concluída com sucesso!");

@@ -11,6 +11,19 @@ public class ClienteService {
 
     static ClienteDAO clienteDAO = new ClienteDAO();
 
+    public static Cliente buscarPorCPF(String clienteCPF) {
+        try{
+            for(Cliente c : ClienteDAO.buscarClientes()){
+                if(c.getCpf().equals(clienteCPF)){
+                    return c;
+                }
+            }
+        } catch (SQLException err){
+            System.out.println(err.getMessage());
+        }
+        return null;
+    }
+
     public Cliente logar(String usuario, String senha) {
         try{
             ArrayList<Cliente> listaClientes = new ArrayList<>(ClienteDAO.buscarClientes());
@@ -52,5 +65,13 @@ public class ClienteService {
             JOptionPane.showMessageDialog(null, "Error no buscar clientes: " + err.getMessage());
         }
         return null;
+    }
+
+    public void buscarDadosBD() {
+        try{
+            ClienteDAO.buscarDadosBD();
+        } catch (SQLException err){
+            System.out.println(err.getMessage());
+        }
     }
 }

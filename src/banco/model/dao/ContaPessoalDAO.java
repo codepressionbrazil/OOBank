@@ -5,16 +5,14 @@ import banco.model.entities.*;
 import banco.model.service.ClienteService;
 import com.mysql.cj.xdevapi.UpdateResult;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 public class ContaPessoalDAO {
 
-    private static Set<ContaPessoal> listaContaPessoal = new HashSet<>();
+    private static LinkedHashSet<ContaPessoal> listaContaPessoal = new LinkedHashSet<>();
     static MySQLConnection conexao = new MySQLConnection();
     static Connection conn = conexao.conectaDB();
     static PreparedStatement pstm;
@@ -43,17 +41,30 @@ public class ContaPessoalDAO {
         pstm.setString(2, String.valueOf(contaPessoal.getNumero()));
         pstm.setString(3, String.valueOf(contaPessoal.getSenha()));
         pstm.setString(4, String.valueOf(contaPessoal.getSaldo()));
-        pstm.setString(5, String.valueOf(contaPessoal.getCliente().getCpf()));
+        pstm.setString(5, String.valueOf(contaPessoal.getClienteCPF()));
         pstm.execute();
         System.out.println("Conta cadastrada com sucesso!");
+        listaContaPessoal.add(contaPessoal);
     }
 
-    public static void depositar(ContaPessoal conta, double valor) {
+    public static void depositar(ContaPessoal conta, double valor) throws SQLException {
+        String sqlCommand = "update conta_pessoal set saldo = ? where numeroConta = ?";
+        pstm = conn.prepareStatement(sqlCommand);
+        pstm.setDouble(1, conta.getSaldo() + valor);
+        pstm.setInt(2, conta.getNumero());
+        pstm.execute();
         conta.setSaldo(conta.getSaldo() + valor);
+        System.out.println("Saldo atualizado com sucesso!\n");
     }
 
-    public static void sacar(ContaPessoal conta, double valor) {
+    public static void sacar(ContaPessoal conta, double valor) throws SQLException {
+        String sqlCommand = "update conta_pessoal set saldo = ? where numeroConta = ?";
+        pstm = conn.prepareStatement(sqlCommand);
+        pstm.setDouble(1, conta.getSaldo() - valor);
+        pstm.setInt(2, conta.getNumero());
+        pstm.execute();
         conta.setSaldo(conta.getSaldo() - valor);
+        System.out.println("Saque concluído com sucesso!\n");
     }
 
 
@@ -62,8 +73,26 @@ public class ContaPessoalDAO {
         Date dataAtual = new Date();
         if(formatador.format(dataAtual).equals("5")){
             for(ContaPessoal contaPessoal : listaContaPessoal){
-                contaPessoal.setSaldo(contaPessoal.getSaldo() + contaPessoal.getCliente().getRenda());
+                contaPessoal.setSaldo(contaPessoal.getSaldo() + ClienteService.buscarPorCPF(contaPessoal.getClienteCPF()).getRenda());
             }
+        }
+    }
+
+    public static void buscarDadosBD() throws SQLException {
+        String query = "select * from conta_pessoal;";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        while(rs.next()){
+            listaContaPessoal.add(
+                    new ContaPessoal(
+                            rs.getInt("agencia"),
+                            rs.getInt("numeroConta"),
+                            rs.getString("senha"),
+                            rs.getString("cliente_cpf"),
+                            rs.getDouble("saldo")
+                    )
+            );
         }
     }
 }

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ClienteDAO {
-//    private static final Set<Cliente> listaClientes = new HashSet<>();
+    private static final Set<Cliente> listaClientes = new HashSet<>();
     static MySQLConnection conexao = new MySQLConnection();
     static Connection conn = conexao.conectaDB();
     static PreparedStatement pstm;
@@ -24,11 +24,14 @@ public class ClienteDAO {
     }
 
 
-    public static Set buscarClientes() throws SQLException {
+    public static Set<Cliente> buscarClientes() throws SQLException {
+        return Collections.unmodifiableSet(listaClientes);
+    }
+
+    public static void buscarDadosBD() throws SQLException {
         String sqlCommand = "select * from clientes";
         pstm = conn.prepareStatement(sqlCommand);
         rs = pstm.executeQuery();
-        HashSet<Cliente> listaClientes = new HashSet<>();
         while(rs.next()){
             listaClientes.add(new Cliente(rs.getString("nome"),
                     rs.getString("endereco"),
@@ -36,9 +39,8 @@ public class ClienteDAO {
                     rs.getString("profissao"),
                     rs.getDouble("renda"),
                     rs.getString("senha")
-                    ));
+            ));
         }
-        return Collections.unmodifiableSet(listaClientes);
     }
 
     public boolean cadastrar(Cliente cliente) throws SQLException {

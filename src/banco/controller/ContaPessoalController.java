@@ -16,7 +16,7 @@ public class ContaPessoalController {
         ContaPessoalService.depositar(numero, valor);
     }
 
-    public static void cadastrarConta(int agencia, int numero, String senha, Cliente clienteLogado) {
+    public static void cadastrarConta(int agencia, int numero, String senha, String clienteLogado) {
         ContaPessoalService.cadastrarConta(agencia, numero, senha, clienteLogado);
     }
 
@@ -34,5 +34,9 @@ public class ContaPessoalController {
 
     public static void atualizarRendas() {
         ContaPessoalService.atualizarRendas();
+    }
+
+    public static void buscarDadosBD() {
+        ContaPessoalService.buscarDadosBD();
     }
 }

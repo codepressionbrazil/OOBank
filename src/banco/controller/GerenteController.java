@@ -11,6 +11,10 @@ public class GerenteController {
 
     static GerenteService gerenteService = new GerenteService();
 
+    public static void buscarDadosBD() {
+        gerenteService.buscarDadosBD();
+    }
+
     public Gerente logar(String usuario, String senha) {
         return new GerenteService().logar(usuario, senha);
     }

@@ -13,7 +13,11 @@ public class ContaPessoalService {
         ContaPessoal conta = buscarContaNumero(numero);
         if (conta != null) {
             if (conta.getSenha().equals(senha)) {
-                ContaPessoalDAO.sacar(conta, valor);
+                try {
+                    ContaPessoalDAO.sacar(conta, valor);
+                } catch (SQLException err){
+                    System.out.println(err.getMessage());
+                }
             } else {
                 System.out.println("Senha incorreta!");
             }
@@ -26,8 +30,7 @@ public class ContaPessoalService {
 
 
     public static ContaPessoal buscarContaNumero(int numero) {
-        ContaPessoalDAO contaPessoalDao = new ContaPessoalDAO();
-        ArrayList<ContaPessoal> contas = new ArrayList<>(contaPessoalDao.buscarContas());
+        ArrayList<ContaPessoal> contas = new ArrayList<>(ContaPessoalDAO.buscarContas());
         for (ContaPessoal contaPessoal : contas) {
             if (contaPessoal.getNumero() == numero) {
                 return contaPessoal;
@@ -39,15 +42,19 @@ public class ContaPessoalService {
     public static void depositar(int numero, double valor) {
         ContaPessoal conta = buscarContaNumero(numero);
         if (conta != null) {
-            ContaPessoalDAO.depositar(conta, valor);
+            try{
+                ContaPessoalDAO.depositar(conta, valor);
+            } catch (SQLException err){
+                System.out.println(err.getMessage());
+            }
         } else {
             System.out.println("Conta não encontrada!");
         }
     }
 
-    public static void cadastrarConta(int agencia, int numero, String senha, Cliente clienteLogado) {
+    public static void cadastrarConta(int agencia, int numero, String senha, String cliente_cpf) {
         try{
-            ContaPessoalDAO.cadastrarConta(new ContaPessoal(agencia, numero, senha, clienteLogado, 0.0));
+            ContaPessoalDAO.cadastrarConta(new ContaPessoal(agencia, numero, senha, cliente_cpf, 0.0));
         } catch (SQLException err){
             System.out.println("Erro: " + err.getMessage());
         }
@@ -56,7 +63,7 @@ public class ContaPessoalService {
     public static void mostrarConta(int numero, String senha) {
         ContaPessoal conta = buscarContaNumero(numero);
         if (conta != null) {
-            if(conta.getCliente().equals(Main.getUsuario())){
+            if(conta.getClienteCPF().equals(Main.getUsuario().getCpf())){
                 if (conta.getSenha().equals(senha)) {
                     System.out.println(conta);
                 } else {
@@ -87,8 +94,12 @@ public class ContaPessoalService {
     public static void trasferir(ContaPessoal conta, int numeroBeneficiado, double valorTransferencia) {
         ContaPessoal contaBeneficiado = buscarContaNumero(numeroBeneficiado);
         if(contaBeneficiado != null){
-            ContaPessoalDAO.depositar(contaBeneficiado, valorTransferencia);
-            ContaPessoalDAO.sacar(conta, valorTransferencia);
+            try{
+                ContaPessoalDAO.depositar(contaBeneficiado, valorTransferencia);
+                ContaPessoalDAO.sacar(conta, valorTransferencia);
+            } catch (SQLException err){
+                System.out.println(err.getMessage());
+            }
         } else {
             System.out.println("Conta do beneficado não encontrada!");
         }
@@ -97,5 +108,13 @@ public class ContaPessoalService {
 
     public static void atualizarRendas() {
         ContaPessoalDAO.atualizarRendas();
+    }
+
+    public static void buscarDadosBD() {
+        try{
+            ContaPessoalDAO.buscarDadosBD();
+        }catch (SQLException err){
+            System.out.println(err.getMessage());
+        }
     }
 }
