@@ -41,7 +41,6 @@ public class ClienteDAO {
                     rs.getString("senha")
             ));
         }
-        conn.close();
     }
 
     public boolean cadastrar(Cliente cliente) throws SQLException {
@@ -54,7 +53,6 @@ public class ClienteDAO {
         pstm.setString(5, cliente.getProfissao());
         pstm.setString(6, String.valueOf(cliente.getRenda()));
         pstm.execute();
-        conn.close();
         listaClientes.add(cliente);
         return true;
     }
