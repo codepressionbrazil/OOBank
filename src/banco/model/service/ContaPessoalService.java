@@ -104,6 +104,8 @@ public class ContaPessoalService {
                 try{
                     ContaPessoalDAO.depositar(contaBeneficiado, valorTransferencia);
                     ContaPessoalDAO.sacar(conta, valorTransferencia);
+
+                    System.out.println("Transferência concluída com sucesso!");
                 } catch (SQLException err){
                     System.out.println(err.getMessage());
                 }

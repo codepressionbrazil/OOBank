@@ -145,7 +145,6 @@ public class Main {
                     System.out.print("Valor da transferência: ");
                     double valorTransferencia = sc.nextDouble();
                     ContaPessoalController.tranferir(conta, numeroBeneficiado, valorTransferencia);
-                    System.out.println("Transferência concluída com sucesso!");
                 }
             } else if(opcaoMenu == 5){
                 System.out.print("Número da conta: ");
